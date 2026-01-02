@@ -1,0 +1,15 @@
+{
+  "name": "GrowthJournal",
+  "short_name": "Growth",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ecfdf5",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "https://www.svgrepo.com/show/384674/account-avatar-profile-user-11.svg",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
