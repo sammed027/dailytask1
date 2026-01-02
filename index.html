@@ -1,216 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrowthJournal | Daily Consistency</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrowthJournal Ultimate</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  body { font-family: 'Poppins', sans-serif; }
+</style>
 </head>
-<body class="bg-[#f8fafc] text-slate-900 min-h-screen">
 
-    <!-- Header -->
-    <header class="bg-white border-b px-4 py-4 sticky top-0 z-20">
-        <div class="max-w-2xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="bg-emerald-500 p-1.5 rounded-lg shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
-                </div>
-                <h1 class="text-lg font-bold tracking-tight">GrowthJournal</h1>
-            </div>
-            <div class="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full border border-orange-100">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-orange-500" viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.5 4 6.5 2 2 3 4 3 6.5a6.5 6.5 0 0 1-13 0c0-1.5.5-3 1-4.5.5 1.5 1.5 3 2.5 4z"></path></svg>
-                <span id="streak-count" class="text-sm font-bold text-orange-700">0 Day Streak</span>
-            </div>
-        </div>
-    </header>
+<body class="bg-gradient-to-br from-slate-50 to-emerald-50 min-h-screen text-slate-800" id="app">
 
-    <main class="max-w-2xl mx-auto px-4 pt-6">
-        
-        <!-- Weekly Calendar Strip -->
-        <section class="mb-8">
-            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                Your Weekly Consistency
-            </h2>
-            <div id="weekly-strip" class="grid grid-cols-7 gap-2">
-                <!-- Days injected by JS -->
-            </div>
-        </section>
+<!-- HEADER -->
+<header class="sticky top-0 bg-white/80 backdrop-blur border-b z-50">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-extrabold text-emerald-600">GrowthJournal</h1>
+    <div class="flex gap-3 items-center">
+      <span id="streak" class="text-sm font-semibold bg-orange-100 text-orange-600 px-4 py-1 rounded-full">🔥 0 Day</span>
+      <button onclick="toggleTheme()" class="text-xl">🌙</button>
+    </div>
+  </div>
+</header>
 
-        <!-- Progress Card -->
-        <section class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm mb-6 relative overflow-hidden">
-            <div class="relative z-10">
-                <p class="text-slate-400 text-sm font-medium">Daily Completion</p>
-                <div class="flex items-baseline gap-2 mt-1">
-                    <h3 id="progress-text" class="text-4xl font-black text-slate-800">0%</h3>
-                    <p id="selected-date-label" class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">TODAY</p>
-                </div>
-                <div class="w-full bg-slate-100 h-2 rounded-full mt-4 overflow-hidden">
-                    <div id="progress-bar" class="bg-emerald-500 h-full transition-all duration-700 ease-out" style="width: 0%"></div>
-                </div>
-            </div>
-        </section>
+<!-- HERO -->
+<section class="max-w-5xl mx-auto px-4 py-8 text-center">
+  <h2 class="text-3xl md:text-4xl font-extrabold">
+    Consistency Builds <span class="text-emerald-600">Greatness</span>
+  </h2>
+  <p id="quote" class="text-slate-500 mt-3"></p>
+</section>
 
-        <!-- Task Input -->
-        <form id="task-form" class="relative mb-6">
-            <input 
-                id="task-input"
-                type="text"
-                placeholder="Add a growth task for this day..."
-                class="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all outline-none font-medium"
-                required
-            >
-            <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <button 
-                type="submit"
-                class="absolute right-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-slate-800 transition-colors"
-            >
-                ADD
-            </button>
-        </form>
+<!-- PROFILE -->
+<section class="max-w-5xl mx-auto px-4 mb-6">
+  <div class="bg-white rounded-3xl p-6 shadow-sm flex gap-4 items-center">
+    <img src="https://www.svgrepo.com/show/384674/account-avatar-profile-user-11.svg" class="w-20">
+    <div class="flex-1">
+      <input id="name" placeholder="Your Name" class="font-bold text-xl outline-none w-full">
+      <input id="goal" placeholder="Your main life goal..." class="text-slate-500 outline-none w-full">
+    </div>
+  </div>
+</section>
 
-        <!-- Tasks List -->
-        <div id="tasks-container" class="space-y-3">
-            <!-- Tasks injected by JS -->
-        </div>
+<!-- TASK INPUT -->
+<section class="max-w-5xl mx-auto px-4">
+<form id="taskForm" class="grid md:grid-cols-5 gap-2">
+  <input id="taskText" required placeholder="New task..." class="col-span-2 p-3 rounded-xl border">
+  <select id="category" class="p-3 rounded-xl border">
+    <option>Work</option>
+    <option>Study</option>
+    <option>Health</option>
+    <option>Personal</option>
+  </select>
+  <select id="priority" class="p-3 rounded-xl border">
+    <option>High</option>
+    <option>Medium</option>
+    <option>Low</option>
+  </select>
+  <button class="bg-emerald-600 text-white rounded-xl font-semibold">ADD</button>
+</form>
+</section>
 
-        <div id="complete-celebration" class="hidden mt-8 p-4 bg-emerald-50 rounded-2xl border border-emerald-100 text-center">
-            <p class="text-emerald-700 text-sm font-bold">🎉 Day Complete! Keep growing.</p>
-        </div>
-    </main>
+<!-- FILTER -->
+<section class="max-w-5xl mx-auto px-4 mt-4 flex gap-2">
+  <select id="filter" onchange="render()" class="p-2 rounded-xl border">
+    <option>All</option>
+    <option>Work</option>
+    <option>Study</option>
+    <option>Health</option>
+    <option>Personal</option>
+  </select>
+</section>
 
-    <script>
-        // State Management
-        let history = JSON.parse(localStorage.getItem('growth_journal_data')) || {};
-        let selectedDate = new Date().toISOString().split('T')[0];
+<!-- TASK LIST -->
+<section id="tasks" class="max-w-5xl mx-auto px-4 mt-6 space-y-3"></section>
 
-        const taskForm = document.getElementById('task-form');
-        const taskInput = document.getElementById('task-input');
-        const tasksContainer = document.getElementById('tasks-container');
-        const weeklyStrip = document.getElementById('weekly-strip');
-        const progressText = document.getElementById('progress-text');
-        const progressBar = document.getElementById('progress-bar');
-        const streakEl = document.getElementById('streak-count');
-        const celebration = document.getElementById('complete-celebration');
+<!-- PROGRESS -->
+<section class="max-w-5xl mx-auto px-4 mt-8">
+  <div class="bg-white rounded-3xl p-6 shadow-sm">
+    <div class="flex justify-between">
+      <span class="font-bold">Daily Progress</span>
+      <span id="progressText" class="font-bold text-emerald-600">0%</span>
+    </div>
+    <div class="h-2 bg-slate-200 rounded-full mt-3">
+      <div id="bar" class="h-2 bg-emerald-500 rounded-full"></div>
+    </div>
+  </div>
+</section>
 
-        function save() {
-            localStorage.setItem('growth_journal_data', JSON.stringify(history));
-            render();
-        }
+<!-- ANALYTICS -->
+<section class="max-w-5xl mx-auto px-4 mt-6">
+  <div class="bg-white rounded-3xl p-6 shadow-sm grid grid-cols-3 text-center">
+    <div><p class="text-2xl font-bold" id="total">0</p><p class="text-sm">Tasks</p></div>
+    <div><p class="text-2xl font-bold" id="done">0</p><p class="text-sm">Completed</p></div>
+    <div><p class="text-2xl font-bold" id="rate">0%</p><p class="text-sm">Consistency</p></div>
+  </div>
+</section>
 
-        function getDays() {
-            const days = [];
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
-                days.push(d.toISOString().split('T')[0]);
-            }
-            return days;
-        }
+<!-- POPUP -->
+<div id="popup" class="fixed inset-0 hidden bg-black/40 flex items-center justify-center">
+  <div class="bg-white rounded-3xl p-8 text-center">
+    <h3 class="text-2xl font-extrabold text-emerald-600">🎉 Congratulations!</h3>
+    <p id="popupText" class="mt-2"></p>
+    <button onclick="closePopup()" class="mt-6 px-6 py-2 bg-emerald-600 text-white rounded-xl">Continue</button>
+  </div>
+</div>
 
-        function calculateStreak() {
-            let count = 0;
-            const today = new Date().toISOString().split('T')[0];
-            const sortedDates = Object.keys(history).sort().reverse();
-            
-            for (const date of sortedDates) {
-                const tasks = history[date] || [];
-                if (tasks.length > 0 && tasks.every(t => t.completed)) {
-                    count++;
-                } else if (date !== today) {
-                    break;
-                }
-            }
-            streakEl.innerText = `${count} Day Streak`;
-        }
+<script>
+const quotes=[
+ "Small steps every day.",
+ "Discipline beats motivation.",
+ "Focus on progress, not perfection.",
+ "Your future is built today."
+];
 
-        function render() {
-            const tasks = history[selectedDate] || [];
-            
-            // Render Tasks
-            tasksContainer.innerHTML = tasks.length === 0 
-                ? `<div class="text-center py-12"><p class="text-slate-400 text-sm">No tasks tracked for this day.</p></div>`
-                : tasks.map(task => `
-                    <div class="group flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 transition-all ${task.completed ? 'bg-slate-50/50' : ''}">
-                        <div class="flex items-center gap-4 flex-1">
-                            <button onclick="toggleTask(${task.id})" class="focus:outline-none transition-all ${task.completed ? 'text-emerald-500' : 'text-slate-300 hover:text-emerald-400'}">
-                                ${task.completed ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="opacity-20 absolute scale-150"></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle></svg>'}
-                            </button>
-                            <span class="font-medium ${task.completed ? 'line-through text-slate-400' : 'text-slate-700'}">${task.text}</span>
-                        </div>
-                        <button onclick="deleteTask(${task.id})" class="p-2 text-slate-200 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
-                `).join('');
+let data=JSON.parse(localStorage.getItem("gj_ultra"))||{
+ user:{name:"",goal:""},
+ tasks:[],
+ streak:0,
+ lastDate:"",
+ theme:"light"
+};
 
-            // Render Progress
-            const doneCount = tasks.filter(t => t.completed).length;
-            const pct = tasks.length === 0 ? 0 : Math.round((doneCount / tasks.length) * 100);
-            progressText.innerText = `${pct}%`;
-            progressBar.style.width = `${pct}%`;
-            celebration.classList.toggle('hidden', !(pct === 100 && tasks.length > 0));
+const $=id=>document.getElementById(id);
+$("quote").innerText=quotes[Math.floor(Math.random()*quotes.length)];
 
-            // Render Weekly Strip
-            weeklyStrip.innerHTML = getDays().map(dateStr => {
-                const isSelected = dateStr === selectedDate;
-                const d = new Date(dateStr);
-                const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
-                const dayNum = d.getDate();
-                const dayTasks = history[dateStr] || [];
-                const isDone = dayTasks.length > 0 && dayTasks.every(t => t.completed);
+function save(){localStorage.setItem("gj_ultra",JSON.stringify(data));render();}
 
-                return `
-                    <button onclick="selectDate('${dateStr}')" class="flex flex-col items-center p-2 rounded-xl border transition-all ${isSelected ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg scale-105 z-10' : 'bg-white border-slate-100 text-slate-500 hover:border-emerald-200'}">
-                        <span class="text-[10px] uppercase font-bold opacity-70">${dayName}</span>
-                        <span class="text-sm font-bold">${dayNum}</span>
-                        <div class="mt-1 h-3 flex items-center justify-center">
-                            ${isDone ? '<svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' : (dayTasks.length > 0 ? '<div class="w-1 h-1 rounded-full bg-current opacity-30"></div>' : '')}
-                        </div>
-                    </button>
-                `;
-            }).join('');
+$("taskForm").onsubmit=e=>{
+ e.preventDefault();
+ data.tasks.push({
+  id:Date.now(),
+  text:$("taskText").value,
+  category:$("category").value,
+  priority:$("priority").value,
+  done:false
+ });
+ $("taskText").value="";
+ save();
+};
 
-            calculateStreak();
-        }
+function toggle(id){
+ data.tasks=data.tasks.map(t=>t.id===id?{...t,done:!t.done}:t);
+ checkStreak();
+ save();
+}
 
-        window.selectDate = (date) => {
-            selectedDate = date;
-            document.getElementById('selected-date-label').innerText = date === new Date().toISOString().split('T')[0] ? 'TODAY' : date;
-            render();
-        };
+function del(id){
+ data.tasks=data.tasks.filter(t=>t.id!==id);
+ save();
+}
 
-        window.toggleTask = (id) => {
-            history[selectedDate] = history[selectedDate].map(t => t.id === id ? {...t, completed: !t.completed} : t);
-            save();
-        };
+function render(){
+ let list=data.tasks;
+ const f=$("filter").value;
+ if(f!=="All") list=list.filter(t=>t.category===f);
 
-        window.deleteTask = (id) => {
-            history[selectedDate] = history[selectedDate].filter(t => t.id !== id);
-            save();
-        };
+ $("tasks").innerHTML=list.map(t=>`
+  <div class="bg-white p-4 rounded-2xl shadow-sm flex justify-between items-center">
+   <div class="flex gap-3 items-center">
+    <input type="checkbox" ${t.done?"checked":""} onchange="toggle(${t.id})">
+    <div>
+     <p class="${t.done?"line-through text-slate-400":""}">${t.text}</p>
+     <p class="text-xs text-slate-400">${t.category} • ${t.priority}</p>
+    </div>
+   </div>
+   <button onclick="del(${t.id})" class="text-red-400">✕</button>
+  </div>
+ `).join("");
 
-        taskForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const text = taskInput.value.trim();
-            if (!text) return;
-            
-            if (!history[selectedDate]) history[selectedDate] = [];
-            history[selectedDate].push({ id: Date.now(), text, completed: false });
-            taskInput.value = '';
-            save();
-        });
+ const done=data.tasks.filter(t=>t.done).length;
+ const pct=data.tasks.length?Math.round(done/data.tasks.length*100):0;
 
-        // Initialize
-        render();
+ $("progressText").innerText=pct+"%";
+ $("bar").style.width=pct+"%";
+ $("streak").innerText="🔥 "+data.streak+" Day";
 
-    </script>
+ $("total").innerText=data.tasks.length;
+ $("done").innerText=done;
+ $("rate").innerText=pct+"%";
+}
+
+function checkStreak(){
+ const today=new Date().toDateString();
+ const pct=data.tasks.filter(t=>t.done).length/data.tasks.length*100;
+ if(pct>=80 && data.lastDate!==today){
+  data.streak++;
+  data.lastDate=today;
+  $("popupText").innerText=`You maintained a ${data.streak} day streak!`;
+  $("popup").classList.remove("hidden");
+ }
+}
+
+function closePopup(){ $("popup").classList.add("hidden"); }
+
+function toggleTheme(){
+ document.body.classList.toggle("bg-slate-900");
+}
+
+$("name").value=data.user.name;
+$("goal").value=data.user.goal;
+$("name").oninput=()=>{data.user.name=$("name").value;save();}
+$("goal").oninput=()=>{data.user.goal=$("goal").value;save();}
+
+render();
+</script>
+
 </body>
-</html>//html co
+</html>
