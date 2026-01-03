@@ -212,6 +212,25 @@ $("goal").oninput=()=>{data.user.goal=$("goal").value;save();}
 
 render();
 </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(() => console.log("Service Worker Registered"));
+}
+    function toast(msg="Action completed") {
+  const t=document.getElementById("toast");
+  t.innerText=msg;
+  t.classList.remove("hidden");
+  setTimeout(()=>t.classList.add("hidden"),2000);
+}
+toast("Task added successfully");
+toast("🔥 Streak updated!");
+
+</script>
+<div id="toast" class="fixed bottom-6 right-6 hidden bg-emerald-600 text-white px-4 py-2 rounded-xl shadow-lg">
+  Action completed ✅
+</div>
+
 
 </body>
 </html>
